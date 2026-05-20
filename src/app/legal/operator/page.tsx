@@ -84,21 +84,6 @@ export default function OperatorPage() {
           </dt>
           <dd className="text-sm text-[var(--ink)]">2026年5月</dd>
         </div>
-        <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-[10rem_1fr]">
-          <dt className="text-sm font-medium text-[var(--ink-2)]">
-            データの保管・削除
-          </dt>
-          <dd className="text-sm leading-relaxed text-[var(--ink)]">
-            データは Supabase（Postgres）の東京（ap-northeast-1）リージョンで保管。退会または個別削除で消去されます。詳細は{' '}
-            <Link
-              href="/legal/privacy"
-              className="border-b border-[var(--vermilion)] text-[var(--vermilion)] hover:text-[var(--vermilion-deep)]"
-            >
-              プライバシーポリシー
-            </Link>
-            。
-          </dd>
-        </div>
       </dl>
 
       <section className="mt-8 border border-[var(--brass)] bg-[rgba(139,105,20,0.06)] px-4 py-3 text-sm text-[var(--ink)]">

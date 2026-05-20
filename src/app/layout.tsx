@@ -67,11 +67,12 @@ export default function RootLayout({
           {children}
         </div>
         <footer className="mt-16 border-t-2 border-double border-[var(--rule-strong)] px-4 py-8 text-center text-xs text-[var(--ink-2)]">
-          <div className="flex items-center justify-center gap-2">
-            <span
-              className="stamp-sq h-6 w-6 text-[11px]"
-              aria-hidden
-            >
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center gap-2 hover:opacity-80"
+            aria-label="卓録トップへ"
+          >
+            <span className="stamp-sq h-6 w-6 text-[11px]" aria-hidden>
               卓
             </span>
             <span
@@ -80,7 +81,7 @@ export default function RootLayout({
             >
               卓 録
             </span>
-          </div>
+          </Link>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
             <Link href="/demo" className="hover:text-[var(--ink)]">
               見本

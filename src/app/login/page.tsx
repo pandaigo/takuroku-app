@@ -102,30 +102,30 @@ export default async function LoginPage({
         })}
       </div>
 
-      {/* 3列縦罫 */}
-      <div className="mt-6 grid grid-cols-3 divide-x divide-[var(--rule)] border border-[var(--rule-strong)] py-3 text-center">
+      {/* 3列縦罫：ラベル(上) → 数値(下) の順で「○○ は ＝ N」の意味階層に */}
+      <div className="mt-6 grid grid-cols-3 divide-x divide-[var(--rule)] border border-[var(--rule-strong)] py-4 text-center">
         <div className="px-1">
-          <p className="tabular text-2xl font-semibold leading-none">
-            5
-          </p>
-          <p className="mt-1 text-[10px] tracking-[0.2em] text-[var(--ink-2)]">
+          <p className="text-[10px] tracking-[0.25em] text-[var(--ink-2)]">
             対 応 種 別
           </p>
+          <p className="tabular mt-2 text-2xl font-semibold leading-none text-[var(--ink)]">
+            5
+          </p>
         </div>
         <div className="px-1">
-          <p className="tabular text-2xl font-semibold leading-none">
-            数十秒
-          </p>
-          <p className="mt-1 text-[10px] tracking-[0.2em] text-[var(--ink-2)]">
+          <p className="text-[10px] tracking-[0.25em] text-[var(--ink-2)]">
             1 記 録
           </p>
+          <p className="tabular mt-2 text-2xl font-semibold leading-none text-[var(--ink)]">
+            数十秒
+          </p>
         </div>
         <div className="px-1">
-          <p className="tabular text-2xl font-semibold leading-none">
-            1 枚
-          </p>
-          <p className="mt-1 text-[10px] tracking-[0.2em] text-[var(--ink-2)]">
+          <p className="text-[10px] tracking-[0.25em] text-[var(--ink-2)]">
             年 鑑 カ ー ド
+          </p>
+          <p className="tabular mt-2 text-2xl font-semibold leading-none text-[var(--ink)]">
+            1 枚
           </p>
         </div>
       </div>
@@ -136,6 +136,30 @@ export default async function LoginPage({
         <li>続けるほど「顔」になる卓年鑑カード</li>
         <li>公開URLとスクショで勧誘・共有</li>
       </ul>
+
+      {/* 見本年鑑カード（種別配慮より前＝先に成果物を見せる） */}
+      <p className="mt-7 text-[10px] tracking-[0.3em] text-[var(--ink-3)]">
+        ── 見 本 ──
+      </p>
+      <div className="mt-2">
+        <CardPresenter
+          category="trpg"
+          groupName="金曜クトゥルフ卓"
+          systemName="クトゥルフ神話TRPG"
+          stats={sampleStats}
+          members="あおい・はる・なつ・ふゆ・Sho"
+          rankLabel="歴 戦"
+          footerRight="最終開催 2025-05-09"
+        />
+      </div>
+      <p className="mt-3 text-center text-xs">
+        <Link
+          href="/demo"
+          className="border-b border-[var(--vermilion)] text-[var(--vermilion)] hover:text-[var(--vermilion-deep)]"
+        >
+          他の種別も見る（マダミス・人狼・ボドゲ）
+        </Link>
+      </p>
 
       {/* 種別ごとの配慮（ペルソナレビュー A-6/7/8 対応） */}
       <section className="mt-7 border border-[var(--rule-strong)] bg-[var(--paper)] p-4">
@@ -169,30 +193,6 @@ export default async function LoginPage({
           </div>
         </dl>
       </section>
-
-      {/* サンプル年鑑カード */}
-      <p className="mt-7 text-[10px] tracking-[0.3em] text-[var(--ink-3)]">
-        ── 見 本 ──
-      </p>
-      <div className="mt-2">
-        <CardPresenter
-          category="trpg"
-          groupName="金曜クトゥルフ卓"
-          systemName="クトゥルフ神話TRPG"
-          stats={sampleStats}
-          members="あおい・はる・なつ・ふゆ・Sho"
-          rankLabel="歴 戦"
-          footerRight="最終開催 2025-05-09"
-        />
-      </div>
-      <p className="mt-3 text-center text-xs">
-        <Link
-          href="/demo"
-          className="border-b border-[var(--vermilion)] text-[var(--vermilion)] hover:text-[var(--vermilion-deep)]"
-        >
-          他の種別も見る（マダミス・人狼・ボドゲ）
-        </Link>
-      </p>
 
       {/* フォーム */}
       <div className="mt-10 border-2 border-[var(--ink)] bg-[var(--paper)] p-5">
