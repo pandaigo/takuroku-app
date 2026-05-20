@@ -9,12 +9,17 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8 md:py-12">
-      <Link
-        href="/legal"
-        className="text-sm text-[var(--ink-2)] hover:text-[var(--ink)]"
-      >
-        ← 法務トップへ
-      </Link>
+      <nav className="text-sm text-[var(--ink-2)]">
+        <Link href="/" className="hover:text-[var(--ink)]">
+          卓録トップ
+        </Link>
+        <span className="mx-2 text-[var(--rule)]">／</span>
+        <Link href="/legal" className="hover:text-[var(--ink)]">
+          法務
+        </Link>
+        <span className="mx-2 text-[var(--rule)]">／</span>
+        <span className="text-[var(--ink-3)]">プライバシーポリシー</span>
+      </nav>
       <h1 className="mt-4 border-b-2 border-double border-[var(--rule-strong)] pb-3 font-[family-name:var(--font-mincho)] text-xl font-semibold tracking-[0.1em] text-[var(--ink)]">
         プライバシーポリシー
       </h1>
