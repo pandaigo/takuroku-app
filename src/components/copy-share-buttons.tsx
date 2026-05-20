@@ -3,7 +3,13 @@
 import { useState } from 'react'
 
 // 公開URLのコピー＆Web Share。スマホ完結の共有導線として必須。
-export function CopyShareButtons({ url, title }: { url: string; title: string }) {
+export function CopyShareButtons({
+  url,
+  title,
+}: {
+  url: string
+  title: string
+}) {
   const [copied, setCopied] = useState(false)
 
   const copy = async () => {
@@ -12,7 +18,6 @@ export function CopyShareButtons({ url, title }: { url: string; title: string })
       setCopied(true)
       setTimeout(() => setCopied(false), 1500)
     } catch {
-      // 失敗時は手動コピー可能なフォールバックとしてプロンプト表示
       window.prompt('URLをコピーしてください', url)
     }
   }
@@ -25,7 +30,6 @@ export function CopyShareButtons({ url, title }: { url: string; title: string })
         // ユーザーキャンセル等は静かに無視
       }
     } else {
-      // Web Share未対応端末はコピーで代替
       await copy()
     }
   }
@@ -35,14 +39,14 @@ export function CopyShareButtons({ url, title }: { url: string; title: string })
       <button
         type="button"
         onClick={copy}
-        className="rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+        className="border-2 border-[var(--ink)] bg-[var(--ink)] px-4 py-2 text-sm font-medium tracking-[0.05em] text-[var(--paper)] hover:bg-[var(--ink-2)]"
       >
         {copied ? 'コピーしました' : 'URLをコピー'}
       </button>
       <button
         type="button"
         onClick={share}
-        className="rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-900"
+        className="border-2 border-[var(--ink)] bg-[var(--paper)] px-4 py-2 text-sm font-medium text-[var(--ink)] hover:bg-[var(--paper-2)]"
       >
         共有…
       </button>

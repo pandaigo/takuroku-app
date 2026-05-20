@@ -120,13 +120,12 @@ export default async function CardPage({
     attendeeSum,
   })
 
-  // メンバー上位7名表示＋それ以上は省略（人狼会等の大人数で潰れない）
   const TOP_N = 7
   const rankedTop = ranked.slice(0, TOP_N)
   const rankedRest = ranked.length - rankedTop.length
   const membersText =
     ranked.length > 0
-      ? rankedTop.map((r) => `${r.name}（${r.c}）`).join('・') +
+      ? rankedTop.map((r) => `${r.name}(${r.c})`).join('・') +
         (rankedRest > 0 ? `…他${rankedRest}名` : '')
       : (members ?? []).map((m) => m.display_name).join('・') || 'まだいません'
 
@@ -142,7 +141,6 @@ export default async function CardPage({
     .slice(0, 3)
     .map((s) => ({ title: s.title as string, note: s.note as string }))
 
-  // カード閲覧計測：fire-and-forget（レンダブロックを避ける）
   const uid = await getUserId()
   if (uid) {
     void supabase.from('events').insert({
@@ -153,10 +151,10 @@ export default async function CardPage({
   }
 
   return (
-    <main className="mx-auto w-full max-w-md flex-1 px-4 py-8">
+    <main className="mx-auto w-full max-w-md flex-1 px-4 py-8 md:max-w-xl md:py-12">
       <Link
         href={`/groups/${id}`}
-        className="text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200"
+        className="text-sm text-[var(--ink-2)] hover:text-[var(--ink)]"
       >
         ← 卓にもどる
       </Link>
@@ -176,35 +174,38 @@ export default async function CardPage({
         />
       </div>
 
-      <p className="mt-4 text-center text-xs text-zinc-500">
+      <p className="mt-4 text-center text-xs text-[var(--ink-3)]">
         この画面をスクショして、卓のDiscordやXに貼れます
       </p>
 
-      <section className="mt-6 rounded-lg border border-zinc-200 p-4 dark:border-zinc-800">
+      <section className="mt-6 border border-[var(--rule-strong)] bg-[var(--paper)] p-5">
         {publicUrl && activeLink ? (
           <div>
-            <p className="text-sm font-medium text-zinc-900 dark:text-zinc-50">
+            <p className="font-[family-name:var(--font-mincho)] text-sm font-semibold tracking-[0.15em] text-[var(--ink)]">
               公開URL（ログイン無しで閲覧可）
             </p>
-            <p className="mt-2 break-all rounded bg-zinc-50 p-2 text-xs text-zinc-800 dark:bg-zinc-950 dark:text-zinc-200">
+            <p className="mt-2 break-all border border-[var(--rule)] bg-[var(--paper-2)] p-2 font-mono text-xs text-[var(--ink)]">
               {publicUrl}
             </p>
             <CopyShareButtons url={publicUrl} title={`${group.name}｜卓録`} />
-            <p className="mt-2 text-xs text-zinc-500">
+            <p className="mt-2 text-xs leading-relaxed text-[var(--ink-2)]">
               このURLを Discord や X に貼ると、相手はログイン無しで卓年鑑カードを見られます。
               {group.contact_url
                 ? '受け手には「参加希望はこちら」ボタンも出ます。'
                 : '※連絡先URL未設定。受け手から連絡できる場所（X/Discord等）を卓編集で追加すると勧誘に効きます。'}
             </p>
             {sp.published ? (
-              <p className="mt-3 rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+              <p
+                aria-live="polite"
+                className="mt-3 border border-[var(--brass)] bg-[rgba(139,105,20,0.06)] px-3 py-2 text-sm text-[var(--brass)]"
+              >
                 公開URLを発行しました。
               </p>
             ) : null}
             <form action={revokePublicLink} className="mt-3">
               <input type="hidden" name="group_id" value={id} />
               <input type="hidden" name="link_id" value={activeLink.id} />
-              <button className="rounded-full border border-red-300 px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-50 dark:border-red-800 dark:text-red-300 dark:hover:bg-red-950">
+              <button className="border-2 border-[var(--vermilion)] bg-[var(--paper)] px-4 py-2 text-sm font-medium text-[var(--vermilion)] hover:bg-[rgba(168,50,45,0.06)]">
                 公開を停止
               </button>
             </form>
@@ -212,14 +213,15 @@ export default async function CardPage({
         ) : (
           <form action={publishCard} className="flex flex-col gap-3">
             <input type="hidden" name="group_id" value={id} />
-            <p className="text-sm font-medium text-zinc-900 dark:text-zinc-50">
+            <p className="font-[family-name:var(--font-mincho)] text-sm font-semibold tracking-[0.15em] text-[var(--ink)]">
               公開URLを発行する
             </p>
-            <p className="text-xs text-zinc-600 dark:text-zinc-400">
+            <p className="text-xs leading-relaxed text-[var(--ink-2)]">
               発行すると、URLを知る誰でもログイン無しで卓年鑑カードを閲覧できます。
-              <strong>メンバー名が掲載される</strong>ため、登録したメンバー一人ひとりに事前に同意を得ていることを確認してください。いつでも公開停止できます。
+              <strong className="text-[var(--ink)]">メンバー名が掲載される</strong>
+              ため、登録したメンバー一人ひとりに事前に同意を得ていることを確認してください。いつでも公開停止できます。
             </p>
-            <label className="flex items-start gap-2 text-xs text-zinc-700 dark:text-zinc-300">
+            <label className="flex items-start gap-2 text-xs text-[var(--ink-2)]">
               <input
                 type="checkbox"
                 name="consent"
@@ -231,34 +233,43 @@ export default async function CardPage({
               </span>
             </label>
             {sp.revoked ? (
-              <p className="rounded-md bg-zinc-50 px-3 py-2 text-xs text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
+              <p className="border border-[var(--rule)] bg-[var(--paper-2)] px-3 py-2 text-xs text-[var(--ink-2)]">
                 公開を停止しました。
               </p>
             ) : null}
             {sp.error === 'consent_required' ? (
-              <p className="rounded-md bg-red-50 px-3 py-2 text-xs text-red-700 dark:bg-red-950 dark:text-red-300">
+              <p
+                aria-live="polite"
+                className="border border-[var(--vermilion)] bg-[rgba(168,50,45,0.05)] px-3 py-2 text-xs text-[var(--vermilion-deep)]"
+              >
                 同意確認のチェックが必要です。
               </p>
             ) : sp.error === 'publish_failed' ? (
-              <p className="rounded-md bg-red-50 px-3 py-2 text-xs text-red-700 dark:bg-red-950 dark:text-red-300">
+              <p
+                aria-live="polite"
+                className="border border-[var(--vermilion)] bg-[rgba(168,50,45,0.05)] px-3 py-2 text-xs text-[var(--vermilion-deep)]"
+              >
                 発行に失敗しました。少し時間をおいて再度お試しください。
               </p>
             ) : null}
-            <button className="self-start rounded-full bg-zinc-900 px-5 py-2 text-sm font-medium text-white hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200">
-              公開する
+            <button className="self-start border-2 border-[var(--ink)] bg-[var(--ink)] px-5 py-2 text-sm font-medium tracking-[0.15em] text-[var(--paper)] hover:bg-[var(--ink-2)]">
+              公 開 す る
             </button>
           </form>
         )}
       </section>
 
       {sp.shared ? (
-        <p className="mt-4 rounded-md bg-emerald-50 px-3 py-2 text-center text-sm text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+        <p
+          aria-live="polite"
+          className="mt-4 border border-[var(--brass)] bg-[rgba(139,105,20,0.06)] px-3 py-2 text-center text-sm text-[var(--brass)]"
+        >
           記録しました。ありがとうございます。
         </p>
       ) : (
         <form action={markCardShared} className="mt-4 flex justify-center">
           <input type="hidden" name="group_id" value={id} />
-          <button className="rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-900">
+          <button className="border border-[var(--rule-strong)] bg-[var(--paper)] px-4 py-2 text-sm font-medium text-[var(--ink)] hover:bg-[var(--paper-2)]">
             このカードを共有・勧誘に使った
           </button>
         </form>

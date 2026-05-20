@@ -18,14 +18,14 @@ export function AttendeeBulkToggle({ fieldsetId }: { fieldsetId: string }) {
       <button
         type="button"
         onClick={() => setAll(true)}
-        className="rounded-full border border-zinc-300 px-3 py-1 text-zinc-700 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
+        className="border border-[var(--rule-strong)] bg-[var(--paper)] px-3 py-1 text-[var(--ink-2)] hover:bg-[var(--paper-2)]"
       >
         全員を選択
       </button>
       <button
         type="button"
         onClick={() => setAll(false)}
-        className="rounded-full border border-zinc-300 px-3 py-1 text-zinc-700 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
+        className="border border-[var(--rule-strong)] bg-[var(--paper)] px-3 py-1 text-[var(--ink-2)] hover:bg-[var(--paper-2)]"
       >
         クリア
       </button>
