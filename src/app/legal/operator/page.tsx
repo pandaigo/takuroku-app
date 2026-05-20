@@ -35,7 +35,7 @@ export default function OperatorPage() {
             運営者
           </dt>
           <dd className="text-sm text-[var(--ink)]">
-            ぱんだいご（個人開発）
+            microforge.hq（個人開発）
           </dd>
         </div>
         <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-[10rem_1fr]">
@@ -44,10 +44,10 @@ export default function OperatorPage() {
           </dt>
           <dd className="text-sm text-[var(--ink)]">
             <a
-              href="mailto:dg.fuji.1999@gmail.com"
+              href="mailto:microforge.hq@gmail.com"
               className="border-b border-[var(--vermilion)] text-[var(--vermilion)] hover:text-[var(--vermilion-deep)]"
             >
-              dg.fuji.1999@gmail.com
+              microforge.hq@gmail.com
             </a>
             <span className="ml-2 text-xs text-[var(--ink-3)]">
               （平日 3 営業日以内に返信）

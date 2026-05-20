@@ -30,10 +30,10 @@ export default function ContactPage() {
           運営者連絡先メール：
         </p>
         <a
-          href="mailto:dg.fuji.1999@gmail.com"
+          href="mailto:microforge.hq@gmail.com"
           className="mt-1 inline-block break-all border-b border-[var(--vermilion)] text-sm text-[var(--vermilion)] hover:text-[var(--vermilion-deep)]"
         >
-          dg.fuji.1999@gmail.com
+          microforge.hq@gmail.com
         </a>
         <p className="mt-3 text-xs text-[var(--ink-3)]">
           応答目安：受領通知 5営業日以内／一次回答 10営業日以内。7日以上の不在となる場合は事前に告知します。
