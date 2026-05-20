@@ -156,7 +156,7 @@ export default async function PublicCardPage({
     }))
 
   return (
-    <main className="mx-auto w-full max-w-md flex-1 px-4 py-8">
+    <main className="mx-auto w-full max-w-md flex-1 px-4 py-8 md:max-w-xl md:py-12">
       <CardPresenter
         category={group.category}
         groupName={group.name}
@@ -170,43 +170,43 @@ export default async function PublicCardPage({
         blurb={group.blurb}
       />
 
-      <div className="mt-6 rounded-lg border border-zinc-200 bg-white p-5 text-center dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="mt-6 border-2 border-[var(--ink)] bg-[var(--paper)] p-5 text-center">
         {group.contact_url ? (
           <>
-            <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200">
+            <p className="font-[family-name:var(--font-mincho)] text-sm font-semibold tracking-[0.15em] text-[var(--ink)]">
               この卓に参加したい方
             </p>
-            <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
+            <p className="mt-1 text-xs text-[var(--ink-2)]">
               主催が指定した連絡先からどうぞ。
             </p>
             <a
               href={group.contact_url}
               target="_blank"
               rel="noreferrer noopener"
-              className="mt-3 inline-block rounded-full bg-zinc-900 px-5 py-2 text-sm font-medium text-white hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+              className="mt-3 inline-block border-2 border-[var(--ink)] bg-[var(--ink)] px-5 py-2 text-sm font-medium tracking-[0.1em] text-[var(--paper)] hover:bg-[var(--ink-2)]"
             >
               参加希望はこちら
             </a>
-            <p className="mt-3 border-t border-zinc-200 pt-3 text-xs text-zinc-500 dark:border-zinc-800">
+            <p className="mt-3 border-t border-dotted border-[var(--rule)] pt-3 text-xs text-[var(--ink-2)]">
               あなたの卓・会も、こんな1枚にできます。
             </p>
             <Link
               href="/login"
-              className="mt-2 inline-block text-xs underline hover:text-zinc-700 dark:hover:text-zinc-300"
+              className="mt-2 inline-block border-b border-[var(--vermilion)] text-xs text-[var(--vermilion)] hover:text-[var(--vermilion-deep)]"
             >
-              自分の卓を作る
+              自分の卓を綴じる（無料）
             </Link>
           </>
         ) : (
           <>
-            <p className="text-sm text-zinc-700 dark:text-zinc-300">
+            <p className="text-sm text-[var(--ink)]">
               あなたの卓・会も、こんな1枚にできます。
             </p>
             <Link
               href="/login"
-              className="mt-3 inline-block rounded-full bg-zinc-900 px-5 py-2 text-sm font-medium text-white hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+              className="mt-3 inline-block border-2 border-[var(--ink)] bg-[var(--ink)] px-5 py-2 text-sm font-medium tracking-[0.1em] text-[var(--paper)] hover:bg-[var(--ink-2)]"
             >
-              自分の卓を作る
+              自分の卓を綴じる
             </Link>
           </>
         )}
@@ -228,14 +228,14 @@ export default async function PublicCardPage({
         </Link>
       </section>
 
-      <p className="mt-6 text-center text-xs text-zinc-400">
-        <Link href="/" className="underline hover:text-zinc-600">
+      <p className="mt-6 text-center text-xs text-[var(--ink-3)]">
+        <Link href="/" className="hover:text-[var(--ink-2)]">
           卓録について
         </Link>
-        <span className="mx-2">／</span>
+        <span className="mx-2 text-[var(--rule)]">／</span>
         <Link
           href={`/legal/complaint?ref=${encodeURIComponent(`/c/${token}`)}`}
-          className="underline hover:text-zinc-600"
+          className="hover:text-[var(--ink-2)]"
         >
           内容を通報
         </Link>
