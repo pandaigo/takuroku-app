@@ -30,7 +30,6 @@ export default async function ComplaintPage({
   }>
 }) {
   const sp = await searchParams
-  // ?ref=/c/xxxxx の形式を想定（卓録ページから来た場合の自動入力）
   const defaultTargetRef = sp.ref ?? ''
   const ALLOWED_KIND = ['public_link', 'member', 'group', 'session', 'other']
   const defaultTargetKind = ALLOWED_KIND.includes(sp.kind ?? '')
@@ -52,20 +51,19 @@ export default async function ComplaintPage({
 
   if (sp.submitted) {
     return (
-      <main className="mx-auto w-full max-w-md flex-1 px-4 py-8">
-        <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+      <main className="mx-auto w-full max-w-md flex-1 px-4 py-8 md:max-w-2xl md:py-12">
+        <h1 className="border-b-2 border-double border-[var(--rule-strong)] pb-3 font-[family-name:var(--font-mincho)] text-xl font-semibold tracking-[0.1em] text-[var(--ink)]">
           通報を受け付けました
         </h1>
-        <p className="mt-3 text-sm text-zinc-700 dark:text-zinc-300">
-          内容を確認し、緊急性が高い場合は3営業日以内、それ以外は10営業日以内に一次対応します。
-          必要に応じて該当の公開URLは一時的に閲覧停止になります。
+        <p className="mt-5 text-sm leading-relaxed text-[var(--ink)]">
+          内容を確認し、緊急性が高い場合は3営業日以内、それ以外は10営業日以内に一次対応します。必要に応じて該当の公開URLは一時的に閲覧停止になります。
         </p>
-        <p className="mt-3 text-xs text-zinc-500">
+        <p className="mt-3 text-xs text-[var(--ink-3)]">
           ご連絡先メールを記入いただいた場合は、対応結果をご連絡します。
         </p>
         <Link
           href="/"
-          className="mt-6 inline-block text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200"
+          className="mt-6 inline-block text-sm text-[var(--ink-2)] hover:text-[var(--ink)]"
         >
           ← 卓録トップへ
         </Link>
@@ -74,34 +72,37 @@ export default async function ComplaintPage({
   }
 
   return (
-    <main className="mx-auto w-full max-w-md flex-1 px-4 py-8">
+    <main className="mx-auto w-full max-w-md flex-1 px-4 py-8 md:max-w-2xl md:py-12">
       <Link
         href="/"
-        className="text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200"
+        className="text-sm text-[var(--ink-2)] hover:text-[var(--ink)]"
       >
         ← 卓録トップへ
       </Link>
-      <h1 className="mt-4 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+      <h1 className="mt-4 border-b-2 border-double border-[var(--rule-strong)] pb-3 font-[family-name:var(--font-mincho)] text-xl font-semibold tracking-[0.1em] text-[var(--ink)]">
         通報・異議申立
       </h1>
-      <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">
+      <p className="mt-5 text-sm leading-relaxed text-[var(--ink-2)]">
         卓録の公開カードや記載内容について、なりすまし・嫌がらせ・実名の勝手な掲載・プライバシー侵害・名誉毀損・違法な内容などがある場合に通報できます。
-        <strong>ログインは不要</strong>です。第三者代理での申立も受け付けます。
+        <strong className="text-[var(--ink)]">ログインは不要</strong>です。第三者代理での申立も受け付けます。
       </p>
 
       {sp.error ? (
-        <p className="mt-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950 dark:text-red-300">
+        <p
+          aria-live="polite"
+          className="mt-4 border border-[var(--vermilion)] bg-[rgba(168,50,45,0.05)] px-3 py-2 text-sm text-[var(--vermilion-deep)]"
+        >
           {sp.error}
         </p>
       ) : null}
 
       <form action={submitComplaint} className="mt-6 flex flex-col gap-4">
-        <label className="flex flex-col gap-1 text-sm text-zinc-700 dark:text-zinc-300">
+        <label className="flex flex-col gap-1 text-sm text-[var(--ink-2)]">
           対象の種別
           <select
             name="target_kind"
             defaultValue={defaultTargetKind}
-            className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 outline-none focus:border-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50"
+            className="border border-[var(--rule-strong)] bg-[var(--paper)] px-3 py-2 text-[var(--ink)] outline-none focus:border-[var(--ink)]"
           >
             <option value="public_link">公開URLのカード</option>
             <option value="member">メンバー名の記載</option>
@@ -111,23 +112,23 @@ export default async function ComplaintPage({
           </select>
         </label>
 
-        <label className="flex flex-col gap-1 text-sm text-zinc-700 dark:text-zinc-300">
+        <label className="flex flex-col gap-1 text-sm text-[var(--ink-2)]">
           対象のURLまたは識別情報
           <input
             name="target_ref"
             defaultValue={defaultTargetRef}
-            placeholder="例: /c/abc123xyz"
-            className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 outline-none focus:border-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50"
+            placeholder="例 /c/abc123xyz"
+            className="border border-[var(--rule-strong)] bg-[var(--paper)] px-3 py-2 text-[var(--ink)] outline-none focus:border-[var(--ink)]"
           />
         </label>
 
-        <label className="flex flex-col gap-1 text-sm text-zinc-700 dark:text-zinc-300">
+        <label className="flex flex-col gap-1 text-sm text-[var(--ink-2)]">
           理由
           <select
             name="reason"
             required
             defaultValue={defaultReason}
-            className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 outline-none focus:border-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50"
+            className="border border-[var(--rule-strong)] bg-[var(--paper)] px-3 py-2 text-[var(--ink)] outline-none focus:border-[var(--ink)]"
           >
             {REASON_OPTIONS.map((r) => (
               <option key={r.value} value={r.value}>
@@ -137,35 +138,36 @@ export default async function ComplaintPage({
           </select>
         </label>
 
-        <label className="flex flex-col gap-1 text-sm text-zinc-700 dark:text-zinc-300">
+        <label className="flex flex-col gap-1 text-sm text-[var(--ink-2)]">
           詳細（具体的に・4000文字以内）
           <textarea
             name="details"
             rows={6}
             placeholder="どの記載が問題か／自分との関係／その他"
-            className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 outline-none focus:border-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50"
+            className="border border-[var(--rule-strong)] bg-[var(--paper)] px-3 py-2 text-[var(--ink)] outline-none focus:border-[var(--ink)]"
           />
         </label>
 
-        <label className="flex flex-col gap-1 text-sm text-zinc-700 dark:text-zinc-300">
+        <label className="flex flex-col gap-1 text-sm text-[var(--ink-2)]">
           連絡先メール（任意・対応結果連絡用）
           <input
             type="email"
             name="reporter_email"
             placeholder="任意"
             autoComplete="email"
-            className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 outline-none focus:border-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50"
+            spellCheck={false}
+            inputMode="email"
+            className="border border-[var(--rule-strong)] bg-[var(--paper)] px-3 py-2 text-[var(--ink)] outline-none focus:border-[var(--ink)]"
           />
         </label>
 
-        <button className="self-start rounded-full bg-zinc-900 px-5 py-2 text-sm font-medium text-white hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200">
+        <button className="self-start border-2 border-[var(--ink)] bg-[var(--ink)] px-5 py-2 text-sm font-medium tracking-[0.15em] text-[var(--paper)] hover:bg-[var(--ink-2)]">
           通報を送信
         </button>
       </form>
 
-      <p className="mt-6 text-xs text-zinc-500">
-        通報内容は確認後、緊急性に応じて該当の公開URLを一時的に閲覧停止することがあります（D17・7.12）。
-        虚偽の通報は禁止されています。
+      <p className="mt-6 text-xs text-[var(--ink-3)]">
+        通報内容は確認後、緊急性に応じて該当の公開URLを一時的に閲覧停止することがあります。虚偽の通報は禁止されています。
       </p>
     </main>
   )

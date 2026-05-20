@@ -3,6 +3,30 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 
+// Google OAuth（ペルソナレビュー A-2 対応：5/6 ペルソナが email+password のみを致命的と指摘）。
+// Supabase Dashboard で Google provider を有効化＋Client ID/Secret 設定が前提。
+export async function signInWithGoogle() {
+  const supabase = await createClient()
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${siteUrl}/auth/callback`,
+    },
+  })
+  if (error) {
+    redirect(
+      '/login?error=' +
+        encodeURIComponent('Googleログインに失敗しました：' + error.message),
+    )
+  }
+  if (data?.url) {
+    redirect(data.url)
+  }
+  redirect('/login?error=' + encodeURIComponent('OAuth URL を取得できませんでした'))
+}
+
 // ログイン。失敗したら理由を付けて /login に戻す。
 export async function signIn(formData: FormData) {
   const email = String(formData.get('email') ?? '').trim()

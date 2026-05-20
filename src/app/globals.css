@@ -47,8 +47,9 @@ body {
     rgba(168, 149, 125, 0.05) 32px
   );
   color: var(--ink);
-  font-family: var(--font-sans), "Hiragino Sans", "Yu Gothic", system-ui,
-    -apple-system, "Segoe UI", Arial, sans-serif;
+  /* 和トーン本文：日本語ゴシックを先頭に。Geist は数字専用(.tabular)で使うため body デフォルトには入れない。 */
+  font-family: "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", "Meiryo",
+    system-ui, -apple-system, "Segoe UI", sans-serif;
   line-height: 1.75;
   font-feature-settings: "palt";
   text-rendering: optimizeLegibility;
@@ -76,8 +77,15 @@ h3 {
   }
 }
 
-/* 数値の縦罫表は等幅化（年鑑帳の台帳感） */
-.tabular,
+/* 数値の縦罫表は等幅化（年鑑帳の台帳感）。
+   ※ 数字は明朝にしない（Shippori Mincho の Arabic 数字は幅がブレるため）。
+   Geist Mono の lining figure を使う。 */
+.tabular {
+  font-family: var(--font-geist-mono), "SF Mono", "Menlo", "Consolas",
+    "Courier New", monospace;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: 0;
+}
 .font-mono {
   font-variant-numeric: tabular-nums;
 }
@@ -136,6 +144,35 @@ h3 {
   outline: 2px solid var(--vermilion);
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+/* PC（lg 以上）：背景に左右の縦罫を入れて年鑑帳の「綴じ」感を出す。
+   モバイルでは出さない（max-w-md コンテンツに対して罫線が遠すぎるため）。 */
+@media (min-width: 1024px) {
+  body {
+    background-image:
+      linear-gradient(
+        to right,
+        transparent calc(50% - 22rem),
+        var(--rule) calc(50% - 22rem),
+        var(--rule) calc(50% - 22rem + 1px),
+        transparent calc(50% - 22rem + 1px)
+      ),
+      linear-gradient(
+        to right,
+        transparent calc(50% + 22rem - 1px),
+        var(--rule) calc(50% + 22rem - 1px),
+        var(--rule) calc(50% + 22rem),
+        transparent calc(50% + 22rem)
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent 0,
+        transparent 31px,
+        rgba(168, 149, 125, 0.05) 31px,
+        rgba(168, 149, 125, 0.05) 32px
+      );
+  }
 }
 
 /* OS の「視差効果を減らす」設定に従う */

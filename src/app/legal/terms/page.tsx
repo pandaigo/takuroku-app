@@ -15,7 +15,7 @@ export default function TermsPage() {
       >
         ← 法務トップへ
       </Link>
-      <h1 className="mt-4 font-[family-name:var(--font-mincho)] text-xl font-semibold tracking-[0.1em] text-[var(--ink)]">
+      <h1 className="mt-4 border-b-2 border-double border-[var(--rule-strong)] pb-3 font-[family-name:var(--font-mincho)] text-xl font-semibold tracking-[0.1em] text-[var(--ink)]">
         利用規約
       </h1>
       <p className="mt-2 text-xs text-[var(--ink-3)]">

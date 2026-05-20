@@ -74,7 +74,7 @@ export function CardPresenter({
       <div className="mt-4 grid grid-cols-3 divide-x divide-[var(--rule)] text-center">
         {stats.map((s, i) => (
           <div key={i} className="px-2">
-            <p className="tabular font-[family-name:var(--font-mincho)] text-2xl font-semibold leading-tight">
+            <p className="tabular text-2xl font-semibold leading-tight">
               {s.value}
             </p>
             <p className="mt-1 text-[10px] tracking-[0.2em] text-[var(--ink-2)]">

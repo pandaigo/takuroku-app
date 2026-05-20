@@ -79,7 +79,7 @@ export default async function Home() {
       {/* 集計サマリー：3列縦罫の年鑑帳目次風 */}
       <section className="mt-6 grid grid-cols-3 divide-x divide-[var(--rule)] border border-[var(--rule-strong)] bg-[var(--paper)] py-4 text-center">
         <div className="px-2">
-          <p className="tabular font-[family-name:var(--font-mincho)] text-3xl font-semibold leading-none text-[var(--ink)]">
+          <p className="tabular text-3xl font-semibold leading-none text-[var(--ink)]">
             {groupCount}
           </p>
           <p className="mt-1.5 text-[10px] tracking-[0.3em] text-[var(--ink-2)]">
@@ -87,7 +87,7 @@ export default async function Home() {
           </p>
         </div>
         <div className="px-2">
-          <p className="tabular font-[family-name:var(--font-mincho)] text-3xl font-semibold leading-none text-[var(--ink)]">
+          <p className="tabular text-3xl font-semibold leading-none text-[var(--ink)]">
             {sessionCount}
           </p>
           <p className="mt-1.5 text-[10px] tracking-[0.3em] text-[var(--ink-2)]">
@@ -95,7 +95,7 @@ export default async function Home() {
           </p>
         </div>
         <div className="px-2">
-          <p className="tabular font-[family-name:var(--font-mincho)] text-3xl font-semibold leading-none text-[var(--ink)]">
+          <p className="tabular text-3xl font-semibold leading-none text-[var(--ink)]">
             {memberCount}
           </p>
           <p className="mt-1.5 text-[10px] tracking-[0.3em] text-[var(--ink-2)]">

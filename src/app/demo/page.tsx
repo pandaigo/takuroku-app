@@ -182,7 +182,7 @@ export default async function DemoPage({
   }
 
   return (
-    <main className="mx-auto w-full max-w-md flex-1 px-4 py-8">
+    <main className="mx-auto w-full max-w-md flex-1 px-4 py-8 md:max-w-xl md:py-12">
       <div className="border border-[var(--brass)] bg-[rgba(139,105,20,0.06)] px-3 py-2 text-xs text-[var(--ink-2)]">
         <strong className="text-[var(--brass)]">見本表示</strong>　架空の卓・架空のメンバーです（実在のユーザーデータは含みません）。
       </div>

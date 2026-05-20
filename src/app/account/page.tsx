@@ -17,7 +17,7 @@ export default async function AccountPage({
     typeof claims.email === 'string' ? claims.email : '（不明）'
 
   return (
-    <main className="mx-auto w-full max-w-md flex-1 px-4 py-8">
+    <main className="mx-auto w-full max-w-md flex-1 px-4 py-8 md:max-w-xl md:py-12">
       <Link
         href="/"
         className="text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200"
