@@ -36,19 +36,25 @@ html {
   color-scheme: light;
 }
 
-/* PC（md 以上）で base font-size を 112.5%（16px→18px）に拡大。
-   rem ベースの text-*/spacing-* が一律にスケールするので、
-   モバイル最適化サイズが PC で小さすぎる問題を一括解消。
-   max-w-xl 等のレイアウト幅も連動して広がる（意図通り）。
-   lg 以上は更に拡大して読みやすく。 */
+/* PC で base font-size を控えめに拡大。
+   大きく上げすぎると装飾の比例（罫線・余白・letter-spacing）が崩れて
+   「ベターっとした感じ」になるので、本文が読みやすい最小ラインに留める。 */
 @media (min-width: 768px) {
   html {
-    font-size: 112.5%;
+    font-size: 107.5%; /* 16 → 17.2px */
   }
 }
 @media (min-width: 1280px) {
   html {
-    font-size: 118.75%;
+    font-size: 112.5%; /* 16 → 18px */
+  }
+}
+
+/* 大見出しは PC でさらに大きく＝本文との hierarchy 差を保つ。
+   明朝の格調を出すため letter-spacing も少し詰める。 */
+@media (min-width: 768px) {
+  h1 {
+    letter-spacing: 0.04em;
   }
 }
 
