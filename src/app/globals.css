@@ -36,6 +36,22 @@ html {
   color-scheme: light;
 }
 
+/* PC（md 以上）で base font-size を 112.5%（16px→18px）に拡大。
+   rem ベースの text-*/spacing-* が一律にスケールするので、
+   モバイル最適化サイズが PC で小さすぎる問題を一括解消。
+   max-w-xl 等のレイアウト幅も連動して広がる（意図通り）。
+   lg 以上は更に拡大して読みやすく。 */
+@media (min-width: 768px) {
+  html {
+    font-size: 112.5%;
+  }
+}
+@media (min-width: 1280px) {
+  html {
+    font-size: 118.75%;
+  }
+}
+
 body {
   background-color: var(--paper);
   /* 紙の繊維をうっすら縦縞で表現（情報量を増やしすぎない） */
