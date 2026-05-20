@@ -137,6 +137,39 @@ export default async function LoginPage({
         <li>公開URLとスクショで勧誘・共有</li>
       </ul>
 
+      {/* 種別ごとの配慮（ペルソナレビュー A-6/7/8 対応） */}
+      <section className="mt-7 border border-[var(--rule-strong)] bg-[var(--paper)] p-4">
+        <p className="font-[family-name:var(--font-mincho)] text-sm font-semibold tracking-[0.2em] text-[var(--ink)]">
+          ── 種 別 ご と の 配 慮
+        </p>
+        <dl className="mt-3 space-y-2.5 text-xs leading-relaxed">
+          <div>
+            <dt className="font-semibold text-[var(--ink)]">マダミス卓</dt>
+            <dd className="mt-0.5 text-[var(--ink-2)]">
+              名場面は<strong className="text-[var(--ink)]">ネタバレ折りたたみ</strong>で投稿可能（公開URL閲覧者にもクリック必須）。公開URL発行前に<strong className="text-[var(--ink)]">プレビュー</strong>で内容を確認・編集できます。シナリオ名を伏せたい場合は仮名や番号で記録。覆面プレイヤー保護は規約に明記。
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-[var(--ink)]">人狼会</dt>
+            <dd className="mt-0.5 text-[var(--ink-2)]">
+              10〜20名の多人数でも、<strong className="text-[var(--ink)]">前回参加者の一括選択</strong>で1回数十秒で記録。村種別（初心者村/常連村等）はタイトルで自由に区別。役職別の細かい記録は将来対応。
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-[var(--ink)]">ボドゲ会</dt>
+            <dd className="mt-0.5 text-[var(--ink-2)]">
+              1セッションで複数ゲーム遊んでも、タイトル欄に「カタン・宝石」のように<strong className="text-[var(--ink)]">中黒で並べて記録</strong>。<strong className="text-[var(--ink)]">ユニークなゲーム数を自動集計</strong>。
+            </dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-[var(--ink)]">TRPG卓</dt>
+            <dd className="mt-0.5 text-[var(--ink-2)]">
+              シナリオ・KP/PL役割・キャンペーン継続を記録。複数シナリオの並行記録、PL別の出席カウントに対応。
+            </dd>
+          </div>
+        </dl>
+      </section>
+
       {/* サンプル年鑑カード */}
       <p className="mt-7 text-[10px] tracking-[0.3em] text-[var(--ink-3)]">
         ── 見 本 ──
