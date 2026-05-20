@@ -48,15 +48,15 @@ export function CardPresenter({
   return (
     <article className="border-2 border-[var(--ink)] bg-[var(--paper)] p-6 text-[var(--ink)] shadow-[3px_3px_0_0_var(--paper-edge)]">
       {/* 上部：年鑑タイトル＋カテゴリ角印 */}
-      <header className="flex items-start justify-between gap-4 border-b border-[var(--rule-strong)] pb-3">
+      <header className="flex items-start justify-between gap-4 border-b border-[var(--rule-strong)] pb-4">
         <div className="min-w-0">
           <p className="font-[family-name:var(--font-mincho)] text-[10px] tracking-[0.5em] text-[var(--ink-2)]">
             卓 年 鑑
           </p>
-          <h1 className="mt-1 truncate text-2xl font-semibold text-[var(--ink)]">
+          <h1 className="mt-2 truncate text-2xl font-semibold text-[var(--ink)]">
             {groupName}
           </h1>
-          <p className="mt-0.5 text-xs text-[var(--ink-2)]">
+          <p className="mt-1.5 text-xs tracking-[0.05em] text-[var(--ink-2)]">
             {kindLabel}
             {systemName ? `／${systemName}` : ''}
           </p>

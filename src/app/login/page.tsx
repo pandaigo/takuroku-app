@@ -57,8 +57,8 @@ export default async function LoginPage({
         >
           takuroku
         </p>
-        <p className="mt-3 text-sm text-[var(--ink-2)]">
-          卓 ・ 会 の 年 鑑 帳
+        <p className="mt-3 text-sm tracking-[0.15em] text-[var(--ink-2)]">
+          卓・会の年鑑帳
         </p>
       </div>
 
