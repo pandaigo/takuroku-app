@@ -6,3 +6,7 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+// Cloudflare Workers 用：dev 中も bindings/env を有効化（OpenNext adapter）
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+initOpenNextCloudflareForDev();

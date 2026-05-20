@@ -20,8 +20,9 @@ export async function createClient() {
               cookieStore.set(name, value, options),
             )
           } catch {
-            // Server Component から呼ばれた場合は書き込めない。
-            // proxy 側でセッションを更新しているため無視してよい。
+            // Server Component の writeable phase 外では cookies().set() 不可。
+            // refresh はブラウザ側 @supabase/ssr が自動で行う（JWT 期限内ならそのまま使用、
+            // 期限切れなら requireAuth() で /login に redirect）。
           }
         },
       },

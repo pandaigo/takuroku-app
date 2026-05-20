@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { requireAuth } from '@/lib/supabase/require-auth'
 import { signOut } from './actions'
 import { KIND_LABEL, TONE } from '@/lib/genre'
 
 export default async function Home() {
+  await requireAuth()
   const supabase = await createClient()
 
   // 集計用クエリを並列実行

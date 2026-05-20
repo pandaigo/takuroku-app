@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { requireAuth } from '@/lib/supabase/require-auth'
 import { addMember, addSession, deleteMember, deleteSession } from './actions'
 import {
   KIND_LABEL,
@@ -21,6 +22,7 @@ export default async function GroupPage({
 }) {
   const { id } = await params
   const sp = await searchParams
+  await requireAuth()
   const supabase = await createClient()
 
   const { data: group } = await supabase

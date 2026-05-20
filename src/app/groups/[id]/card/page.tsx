@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { requireAuth } from '@/lib/supabase/require-auth'
 import { getUserId } from '@/lib/auth'
 import { markCardShared } from './actions'
 import { publishCard, revokePublicLink } from './publish-actions'
@@ -30,6 +31,7 @@ export default async function CardPage({
 }) {
   const { id } = await params
   const sp = await searchParams
+  await requireAuth()
   const supabase = await createClient()
 
   const { data: group } = await supabase

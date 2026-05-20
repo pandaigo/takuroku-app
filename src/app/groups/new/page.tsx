@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { requireAuth } from '@/lib/supabase/require-auth'
 import { createGroup } from './actions'
 
 export default async function NewGroupPage({
@@ -6,6 +7,7 @@ export default async function NewGroupPage({
 }: {
   searchParams: Promise<{ error?: string }>
 }) {
+  await requireAuth()
   const sp = await searchParams
 
   return (
