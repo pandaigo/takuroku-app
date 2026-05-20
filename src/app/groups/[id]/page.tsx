@@ -156,25 +156,38 @@ export default async function GroupPage({
         </ul>
         <form
           action={addMember}
-          className="mt-3 flex flex-wrap items-end gap-2"
+          className="mt-3 flex flex-col gap-2"
         >
           <input type="hidden" name="group_id" value={id} />
-          <input
-            name="display_name"
-            required
-            placeholder="名前"
-            className="border border-[var(--rule-strong)] bg-[var(--paper)] px-3 py-2 text-sm text-[var(--ink)] outline-none focus:border-[var(--ink)]"
-          />
-          <input
-            name="role"
-            placeholder={
-              ROLE_PLACEHOLDER[group.category] ?? ROLE_PLACEHOLDER.other
-            }
-            className="border border-[var(--rule-strong)] bg-[var(--paper)] px-3 py-2 text-sm text-[var(--ink)] outline-none focus:border-[var(--ink)]"
-          />
-          <button className="border-2 border-[var(--ink)] bg-[var(--paper)] px-3 py-2 text-sm font-medium text-[var(--ink)] hover:bg-[var(--paper-2)]">
-            ＋ 連名する
-          </button>
+          <div className="flex flex-wrap items-end gap-2">
+            <input
+              name="display_name"
+              required
+              placeholder="名前"
+              className="border border-[var(--rule-strong)] bg-[var(--paper)] px-3 py-2 text-sm text-[var(--ink)] outline-none focus:border-[var(--ink)]"
+            />
+            <input
+              name="role"
+              placeholder={
+                ROLE_PLACEHOLDER[group.category] ?? ROLE_PLACEHOLDER.other
+              }
+              className="border border-[var(--rule-strong)] bg-[var(--paper)] px-3 py-2 text-sm text-[var(--ink)] outline-none focus:border-[var(--ink)]"
+            />
+            <button className="border-2 border-[var(--ink)] bg-[var(--paper)] px-3 py-2 text-sm font-medium text-[var(--ink)] hover:bg-[var(--paper-2)]">
+              ＋ 連名する
+            </button>
+          </div>
+          <label className="flex items-start gap-2 text-xs text-[var(--ink-2)]">
+            <input
+              type="checkbox"
+              name="consent_confirmed"
+              required
+              className="mt-0.5"
+            />
+            <span>
+              この名前で記録することを<strong className="text-[var(--ink)]">本人から同意を得ています</strong>（公開URL発行時に掲載される可能性があります）
+            </span>
+          </label>
         </form>
       </section>
 

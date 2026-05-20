@@ -21,12 +21,34 @@ const REASON_OPTIONS: { value: string; label: string }[] = [
 export default async function ComplaintPage({
   searchParams,
 }: {
-  searchParams: Promise<{ ref?: string; submitted?: string; error?: string }>
+  searchParams: Promise<{
+    ref?: string
+    kind?: string
+    reason?: string
+    submitted?: string
+    error?: string
+  }>
 }) {
   const sp = await searchParams
   // ?ref=/c/xxxxx の形式を想定（卓録ページから来た場合の自動入力）
   const defaultTargetRef = sp.ref ?? ''
-  const defaultTargetKind = sp.ref?.startsWith('/c/') ? 'public_link' : 'other'
+  const ALLOWED_KIND = ['public_link', 'member', 'group', 'session', 'other']
+  const defaultTargetKind = ALLOWED_KIND.includes(sp.kind ?? '')
+    ? (sp.kind as string)
+    : sp.ref?.startsWith('/c/')
+      ? 'public_link'
+      : 'other'
+  const ALLOWED_REASON = [
+    'impersonation',
+    'harassment',
+    'privacy',
+    'defamation',
+    'illegal',
+    'other',
+  ]
+  const defaultReason = ALLOWED_REASON.includes(sp.reason ?? '')
+    ? (sp.reason as string)
+    : 'harassment'
 
   if (sp.submitted) {
     return (
@@ -104,7 +126,7 @@ export default async function ComplaintPage({
           <select
             name="reason"
             required
-            defaultValue="harassment"
+            defaultValue={defaultReason}
             className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 outline-none focus:border-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50"
           >
             {REASON_OPTIONS.map((r) => (

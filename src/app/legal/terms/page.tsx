@@ -6,26 +6,23 @@ export const metadata: Metadata = {
   description: '卓録サービスの利用規約',
 }
 
-// 注：本ページは要件定義（D21）に基づく**構造的雛形**。
-// 実運用前に法務専門家による確認のうえ各項目を最終化すること。
-
 export default function TermsPage() {
   return (
     <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8">
       <Link
         href="/legal"
-        className="text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200"
+        className="text-sm text-[var(--ink-2)] hover:text-[var(--ink)]"
       >
         ← 法務トップへ
       </Link>
-      <h1 className="mt-4 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+      <h1 className="mt-4 font-[family-name:var(--font-mincho)] text-xl font-semibold tracking-[0.1em] text-[var(--ink)]">
         利用規約
       </h1>
-      <p className="mt-2 text-xs text-zinc-500">
-        最終更新日：2026-05-20（雛形）/ 本規約は法務確認後に確定します
+      <p className="mt-2 text-xs text-[var(--ink-3)]">
+        最終更新日：2026-05-20
       </p>
 
-      <article className="prose prose-sm mt-6 max-w-none text-zinc-800 dark:prose-invert dark:text-zinc-200">
+      <article className="prose prose-sm mt-6 max-w-none text-[var(--ink)]">
         <h2 className="mt-6 text-base font-semibold">第1条 サービス概要</h2>
         <p>
           卓録（以下「本サービス」）は、TRPG卓・マダミス卓・人狼会・ボドゲ会等の
@@ -84,6 +81,15 @@ export default function TermsPage() {
         <h2 className="mt-6 text-base font-semibold">第10条 準拠法・合意管轄</h2>
         <p>
           本規約は日本法に準拠します。本サービスに関する紛争は、運営者の所在地を管轄する地方裁判所を第一審の専属的合意管轄裁判所とします。
+        </p>
+
+        <h2 className="mt-6 text-base font-semibold">第11条 運営者</h2>
+        <p>
+          本サービスの運営者・連絡先は{' '}
+          <Link href="/legal/operator" className="underline">
+            運営者情報
+          </Link>
+          ページに記載しています。
         </p>
       </article>
     </main>

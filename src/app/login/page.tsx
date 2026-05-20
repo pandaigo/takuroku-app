@@ -67,6 +67,22 @@ export default async function LoginPage({
         「誰と・どれだけ続けたか」を残す、紙の年鑑帳のような記録アプリ。
       </p>
 
+      {/* 差別化コピー：Discord/CCFOLIA との関係を明確化 */}
+      <div className="mt-4 border-l-2 border-[var(--vermilion)] bg-[rgba(168,50,45,0.04)] py-2 pl-3 pr-2 text-xs leading-relaxed text-[var(--ink-2)]">
+        <p>
+          <span className="text-[var(--ink-3)]">Discord は</span>
+          ログが流れる。
+          <span className="text-[var(--ink-3)] ml-2">CCFOLIA は</span>
+          1卓1セッションの記録。
+        </p>
+        <p className="mt-0.5 font-[family-name:var(--font-mincho)] font-semibold text-[var(--ink)]">
+          卓録は <span className="text-[var(--vermilion)]">卓そのもの</span>の歴史を、1枚のカードに。
+        </p>
+        <p className="mt-0.5 text-[var(--ink-3)]">
+          過去の履歴も CSV でまとめて取り込めます。
+        </p>
+      </div>
+
       {/* 5種別の角印 */}
       <div className="mt-5 flex flex-wrap items-center justify-start gap-2">
         {KIND_LIST.map((k) => {

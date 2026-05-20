@@ -6,6 +6,8 @@ import { createClient } from '@/lib/supabase/server'
 import { getUserId } from '@/lib/auth'
 
 // メンバー追加（主催が代理で。本人登録は不要）。
+// ペルソナレビュー（はる）の指摘：本人同意のチェックを UI で明示要求する。
+// 規約文だけだと主催への運用責任丸投げに見える → アプリ側で都度確認する。
 export async function addMember(formData: FormData) {
   const uid = await getUserId()
   if (!uid) redirect('/login')
@@ -13,11 +15,18 @@ export async function addMember(formData: FormData) {
   const groupId = String(formData.get('group_id') ?? '')
   const displayName = String(formData.get('display_name') ?? '').trim()
   const role = String(formData.get('role') ?? '').trim()
+  const consentConfirmed = formData.get('consent_confirmed') === 'on'
   if (!groupId) redirect('/')
   if (!displayName) {
     redirect(
       `/groups/${groupId}?error=` +
         encodeURIComponent('名前を入れてください'),
+    )
+  }
+  if (!consentConfirmed) {
+    redirect(
+      `/groups/${groupId}?error=` +
+        encodeURIComponent('本人同意のチェックが必要です'),
     )
   }
 

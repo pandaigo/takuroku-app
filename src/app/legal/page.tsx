@@ -20,6 +20,14 @@ export default function LegalIndex() {
       <ul className="mt-4 flex flex-col gap-2">
         <li>
           <Link
+            href="/legal/operator"
+            className="text-sm text-zinc-700 underline hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100"
+          >
+            運営者情報
+          </Link>
+        </li>
+        <li>
+          <Link
             href="/legal/terms"
             className="text-sm text-zinc-700 underline hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100"
           >

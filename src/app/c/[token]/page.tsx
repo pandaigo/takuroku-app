@@ -212,16 +212,32 @@ export default async function PublicCardPage({
         )}
       </div>
 
+      {/* 掲載されている方への即時導線（ペルソナ「はる」の指摘対応） */}
+      <section className="mt-6 border border-[var(--brass)] bg-[rgba(139,105,20,0.06)] px-4 py-3 text-xs">
+        <p className="font-[family-name:var(--font-mincho)] font-semibold tracking-[0.1em] text-[var(--brass)]">
+          ── このカードに自分の名前が載っている方へ
+        </p>
+        <p className="mt-1 text-[var(--ink-2)]">
+          掲載拒否や名前の削除を希望される場合は、こちらから申請できます（ログイン不要・主催の許可不要）。緊急の事案は3営業日以内に対応します。
+        </p>
+        <Link
+          href={`/legal/complaint?ref=${encodeURIComponent(`/c/${token}`)}&kind=member&reason=harassment`}
+          className="mt-2 inline-block border border-[var(--vermilion)] bg-[var(--paper)] px-3 py-1.5 text-xs font-medium text-[var(--vermilion)] hover:bg-[rgba(168,50,45,0.06)]"
+        >
+          掲載拒否を申請する
+        </Link>
+      </section>
+
       <p className="mt-6 text-center text-xs text-zinc-400">
         <Link href="/" className="underline hover:text-zinc-600">
           卓録について
         </Link>
-        　/
+        <span className="mx-2">／</span>
         <Link
           href={`/legal/complaint?ref=${encodeURIComponent(`/c/${token}`)}`}
           className="underline hover:text-zinc-600"
         >
-          この内容を通報
+          内容を通報
         </Link>
       </p>
     </main>

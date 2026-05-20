@@ -86,6 +86,10 @@ export default function RootLayout({
               見本
             </Link>
             <span className="text-[var(--rule)]">／</span>
+            <Link href="/legal/operator" className="hover:text-[var(--ink)]">
+              運営者
+            </Link>
+            <span className="text-[var(--rule)]">／</span>
             <Link href="/legal/terms" className="hover:text-[var(--ink)]">
               利用規約
             </Link>
