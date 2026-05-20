@@ -137,6 +137,26 @@ export default async function LoginPage({
         <li>公開URLとスクショで勧誘・共有</li>
       </ul>
 
+      {/* 料金・データ主権の明示（ペルソナ集約 A 級: みき・ジンの指摘対応） */}
+      <section className="mt-6 border border-[var(--brass)] bg-[rgba(139,105,20,0.06)] p-4">
+        <p className="font-[family-name:var(--font-mincho)] text-sm font-semibold tracking-[0.2em] text-[var(--brass)]">
+          ── 料 金 と デ ー タ
+        </p>
+        <ul className="chapter-list mt-2 space-y-1 pl-2 text-xs leading-relaxed text-[var(--ink)]">
+          <li>
+            <strong className="text-[var(--ink)]">主催も今は無料</strong>で全機能。将来一部の主催向け機能を有料化する場合は、施行30日前に必ず告知します。
+          </li>
+          <li>
+            <strong className="text-[var(--ink)]">掲載される参加者は一生無料</strong>（主催が将来払う設計。参加者にアカウント作成を強いない）。
+          </li>
+          <li>
+            あなたのデータは
+            <strong className="text-[var(--ink)]">いつでも JSON で全件ダウンロード可能</strong>
+            。サービス終了時も最低 60 日前に告知し、エクスポート期間を確保します。
+          </li>
+        </ul>
+      </section>
+
       {/* 見本年鑑カード（種別配慮より前＝先に成果物を見せる） */}
       <p className="mt-7 text-[10px] tracking-[0.3em] text-[var(--ink-3)]">
         ── 見 本 ──
