@@ -90,12 +90,20 @@ export default async function GroupPage({
             {group.started_on ? `　結成 ${group.started_on}` : ''}
           </p>
         </div>
-        <Link
-          href={`/groups/${id}/card`}
-          className="shrink-0 border-2 border-[var(--ink)] bg-[var(--paper)] px-4 py-2 text-sm font-medium text-[var(--ink)] transition-colors hover:bg-[var(--paper-2)]"
-        >
-          卓年鑑カード
-        </Link>
+        <div className="flex shrink-0 flex-col items-end gap-2">
+          <Link
+            href={`/groups/${id}/card`}
+            className="border-2 border-[var(--ink)] bg-[var(--paper)] px-4 py-2 text-sm font-medium text-[var(--ink)] transition-colors hover:bg-[var(--paper-2)]"
+          >
+            卓年鑑カード
+          </Link>
+          <Link
+            href={`/groups/${id}/import`}
+            className="text-xs text-[var(--ink-2)] underline-offset-2 hover:text-[var(--ink)] hover:underline"
+          >
+            一括投入（CSV）
+          </Link>
+        </div>
       </div>
 
       {sp.error ? (
