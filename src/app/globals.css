@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+/* dark バリアントは無効化（紙基調アイデンティティ最優先）。
+   data-theme="dark" 属性は付与しないので既存の dark:* は全部当たらない。 */
+@variant dark (&:where([data-theme="dark"]));
+
+/* 卓録：和の年鑑帳トーン
+   - 背景は紙色クリーム一本（ダークモード廃止：和紙のアイデンティティ最優先）
+   - 文字は墨、アクセントは朱と金茶
+   - 罫線で区画を切る台帳レイアウト */
+:root {
+  --paper: #fbf7f0;      /* 紙地 */
+  --paper-2: #f3ecdd;    /* 罫の下地・控えめ強調 */
+  --paper-edge: #e7dcc4; /* 区切りの薄い帯 */
+  --ink: #1a1815;        /* 墨（本文） */
+  --ink-2: #56504a;      /* 二級墨（副情報） */
+  --ink-3: #8a8378;      /* 三級墨（補足） */
+  --rule: #c4b599;       /* 罫線（細） */
+  --rule-strong: #a8957d;/* 罫線（太） */
+  --vermilion: #a8322d;  /* 朱（印鑑） */
+  --vermilion-deep: #7a1f1f;
+  --brass: #8b6914;      /* 金茶（控えめサブ） */
+}
+
+@theme inline {
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-mincho: var(--font-shippori);
+}
+
+html {
+  background-color: var(--paper);
+  /* ブラウザ標準UI（input/select/scrollbar）の自動ダーク対応を明示的に切る */
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--paper);
+  /* 紙の繊維をうっすら縦縞で表現（情報量を増やしすぎない） */
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 31px,
+    rgba(168, 149, 125, 0.05) 31px,
+    rgba(168, 149, 125, 0.05) 32px
+  );
+  color: var(--ink);
+  font-family: var(--font-sans), "Hiragino Sans", "Yu Gothic", system-ui,
+    -apple-system, "Segoe UI", Arial, sans-serif;
+  line-height: 1.75;
+  font-feature-settings: "palt";
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: rgba(168, 50, 45, 0.18);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-mincho), "Yu Mincho", "Hiragino Mincho ProN",
+    "Noto Serif JP", serif;
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+/* タッチデバイスで300ms遅延を消す */
+@media (pointer: coarse) {
+  a,
+  button,
+  label,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+}
+
+/* 数値の縦罫表は等幅化（年鑑帳の台帳感） */
+.tabular,
+.font-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 朱印（角印）：正方枠＋朱赤＋明朝。文字数1〜2字推奨 */
+.stamp-sq {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--vermilion);
+  color: var(--vermilion);
+  font-family: var(--font-mincho), "Yu Mincho", serif;
+  font-weight: 700;
+  letter-spacing: 0;
+  background: rgba(168, 50, 45, 0.05);
+}
+
+/* 称号印鑑（細枠・横長） */
+.stamp-rank {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid var(--vermilion);
+  color: var(--vermilion);
+  background: rgba(168, 50, 45, 0.04);
+  font-family: var(--font-mincho), "Yu Mincho", serif;
+  letter-spacing: 0.3em;
+  font-weight: 600;
+  padding: 0.2rem 0.7rem;
+  text-indent: 0.3em;
+}
+
+/* 二重罫（章区切り用） */
+.rule-double {
+  border-top: 1px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule-strong);
+  height: 4px;
+  background: transparent;
+}
+
+/* 章番号風キャップ：「一、」「二、」（疑似要素で counter） */
+.chapter-list {
+  counter-reset: chapter;
+  list-style: none;
+}
+.chapter-list > li::before {
+  counter-increment: chapter;
+  content: counter(chapter, cjk-ideographic) "、";
+  color: var(--vermilion);
+  font-family: var(--font-mincho), "Yu Mincho", serif;
+  margin-right: 0.3em;
+  font-weight: 600;
+}
+
+/* キーボード操作時のフォーカスを明示。マウス操作では出さない */
+:focus-visible {
+  outline: 2px solid var(--vermilion);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* OS の「視差効果を減らす」設定に従う */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
