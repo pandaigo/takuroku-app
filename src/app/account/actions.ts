@@ -45,6 +45,33 @@ export async function changeEmail(formData: FormData) {
   )
 }
 
+// 月次レポートメール配信 ON/OFF。Pro 機能 #5。
+// profiles.monthly_report_enabled を toggle。
+export async function updateMonthlyReportPref(formData: FormData) {
+  const enabled = formData.get('monthly_report_enabled') === 'on'
+  const supabase = await createClient()
+  const { data: authData } = await supabase.auth.getClaims()
+  const uid =
+    typeof authData?.claims?.sub === 'string' ? authData.claims.sub : null
+  if (!uid) redirect('/login')
+  const { error } = await supabase
+    .from('profiles')
+    .update({ monthly_report_enabled: enabled })
+    .eq('id', uid)
+  if (error) {
+    redirect('/account?error=' + encodeURIComponent(error.message))
+  }
+  revalidatePath('/account')
+  redirect(
+    '/account?message=' +
+      encodeURIComponent(
+        enabled
+          ? '月次レポートの配信を ON にしました'
+          : '月次レポートの配信を OFF にしました',
+      ),
+  )
+}
+
 // 退会：本人確認のため「削除」と打ってもらう。連鎖削除で全データ消去。
 export async function deleteAccount(formData: FormData) {
   const confirm = String(formData.get('confirm') ?? '')

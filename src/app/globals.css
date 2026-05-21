@@ -228,6 +228,46 @@ h3 {
   }
 }
 
+/* 印刷時：卓年鑑カードだけが綺麗に1枚に収まるよう、
+   ナビ・フッター・装飾の縦罫/柱は隠す。Pro 機能 #6 年末 PDF。 */
+@media print {
+  body {
+    background: white !important;
+    background-image: none !important;
+  }
+  body::before,
+  body::after {
+    display: none !important;
+  }
+  footer,
+  nav,
+  header > * {
+    display: none !important;
+  }
+  /* card ページの「もどる」リンク・補足・操作ボタン全部隠す */
+  main > a[href^='/groups/'],
+  main > section,
+  main > form,
+  main > p:not(:has(strong)),
+  .print\:hidden {
+    display: none !important;
+  }
+  /* 卓年鑑カードを print 専用にレイアウト最大化 */
+  #print-card {
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+  #print-card article {
+    box-shadow: none !important;
+    border-width: 2px !important;
+  }
+  @page {
+    size: A4 portrait;
+    margin: 18mm;
+  }
+}
+
 /* OS の「視差効果を減らす」設定に従う */
 @media (prefers-reduced-motion: reduce) {
   *,

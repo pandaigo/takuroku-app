@@ -62,6 +62,9 @@ export default async function Home() {
           </span>
         </div>
         <div className="flex items-center gap-4 text-sm text-[var(--ink-2)]">
+          <Link href="/insights" className="hover:text-[var(--ink)]">
+            分析
+          </Link>
           <Link href="/account" className="hover:text-[var(--ink)]">
             手帳
           </Link>

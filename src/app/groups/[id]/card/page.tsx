@@ -16,6 +16,7 @@ import {
 } from '@/lib/genre'
 import { CardPresenter } from '@/components/card-presenter'
 import { CopyShareButtons } from '@/components/copy-share-buttons'
+import { PrintButton } from '@/components/print-button'
 
 export default async function CardPage({
   params,
@@ -159,7 +160,7 @@ export default async function CardPage({
         ← 卓にもどる
       </Link>
 
-      <div className="mt-4">
+      <div id="print-card" className="mt-4">
         <CardPresenter
           category={group.category}
           groupName={group.name}
@@ -174,9 +175,12 @@ export default async function CardPage({
         />
       </div>
 
-      <p className="mt-4 text-center text-xs text-[var(--ink-3)]">
-        この画面をスクショして、卓のDiscordやXに貼れます
-      </p>
+      <div className="mt-4 flex flex-wrap items-center justify-center gap-2 print:hidden">
+        <p className="text-xs text-[var(--ink-3)]">
+          スクショして Discord や X に貼れます
+        </p>
+        <PrintButton label="PDF にする" />
+      </div>
 
       <section className="mt-6 border border-[var(--rule-strong)] bg-[var(--paper)] p-5">
         {publicUrl && activeLink ? (
@@ -187,7 +191,17 @@ export default async function CardPage({
             <p className="mt-2 break-all border border-[var(--rule)] bg-[var(--paper-2)] p-2 font-mono text-xs text-[var(--ink)]">
               {publicUrl}
             </p>
-            <CopyShareButtons url={publicUrl} title={`${group.name}｜卓録`} />
+            <CopyShareButtons
+              url={publicUrl}
+              title={`${group.name}｜卓録`}
+              xText={`【${group.name}】通算${total}回${
+                months >= 12
+                  ? `・${Math.floor(months / 12)}年${months % 12 > 0 ? `${months % 12}ヶ月` : ''}継続`
+                  : months > 0
+                    ? `・${months}ヶ月継続`
+                    : ''
+              }${lastPlayed ? `（最終 ${lastPlayed}）` : ''}\n卓年鑑カードを公開しました。`}
+            />
             <p className="mt-2 text-xs leading-relaxed text-[var(--ink-2)]">
               このURLを Discord や X に貼ると、相手はログイン無しで卓年鑑カードを見られます。
               {group.contact_url

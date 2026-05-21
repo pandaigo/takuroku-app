@@ -1,7 +1,12 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { changePassword, changeEmail, deleteAccount } from './actions'
+import {
+  changePassword,
+  changeEmail,
+  deleteAccount,
+  updateMonthlyReportPref,
+} from './actions'
 
 export default async function AccountPage({
   searchParams,
@@ -15,6 +20,15 @@ export default async function AccountPage({
   if (!claims) redirect('/login')
   const currentEmail =
     typeof claims.email === 'string' ? claims.email : '（不明）'
+  const uid = typeof claims.sub === 'string' ? claims.sub : null
+  const { data: profile } = uid
+    ? await supabase
+        .from('profiles')
+        .select('monthly_report_enabled')
+        .eq('id', uid)
+        .maybeSingle()
+    : { data: null }
+  const monthlyEnabled = profile?.monthly_report_enabled ?? true
 
   return (
     <main className="mx-auto w-full max-w-md flex-1 px-4 py-8 md:max-w-xl md:py-12">
@@ -104,6 +118,29 @@ export default async function AccountPage({
           />
           <button className="self-start border-2 border-[var(--ink)] bg-[var(--paper)] px-5 py-2 text-sm font-medium text-[var(--ink)] hover:bg-[var(--paper-2)]">
             変更リクエストを送る
+          </button>
+        </form>
+      </section>
+
+      {/* 月次レポートメール（Pro #5） */}
+      <section className="mt-6 border border-[var(--rule-strong)] bg-[var(--paper)] p-5">
+        <h2 className="font-[family-name:var(--font-mincho)] text-sm font-semibold tracking-[0.15em] text-[var(--ink)]">
+          月次レポートメール
+        </h2>
+        <p className="mt-2 text-xs leading-relaxed text-[var(--ink-2)]">
+          毎月 1 日に「先月の卓統計（卓数・通算開催・同卓者・シナリオ・MVP）」を登録メールにお届けします。配信を止めたい場合は OFF に。
+        </p>
+        <form action={updateMonthlyReportPref} className="mt-3 flex items-center gap-3">
+          <label className="flex items-center gap-2 text-sm text-[var(--ink)]">
+            <input
+              type="checkbox"
+              name="monthly_report_enabled"
+              defaultChecked={monthlyEnabled}
+            />
+            <span>毎月のレポートを受け取る</span>
+          </label>
+          <button className="border-2 border-[var(--ink)] bg-[var(--paper)] px-4 py-1.5 text-sm font-medium text-[var(--ink)] hover:bg-[var(--paper-2)]">
+            保存
           </button>
         </form>
       </section>
