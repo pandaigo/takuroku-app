@@ -2,7 +2,13 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { requireAuth } from '@/lib/supabase/require-auth'
-import { addMember, addSession, deleteMember, deleteSession } from './actions'
+import {
+  addMember,
+  addSession,
+  deleteMember,
+  deleteSession,
+  updateGroupSettings,
+} from './actions'
 import {
   KIND_LABEL,
   TITLE_PLACEHOLDER,
@@ -18,7 +24,7 @@ export default async function GroupPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>
-  searchParams: Promise<{ error?: string }>
+  searchParams: Promise<{ error?: string; message?: string }>
 }) {
   const { id } = await params
   const sp = await searchParams
@@ -27,7 +33,9 @@ export default async function GroupPage({
 
   const { data: group } = await supabase
     .from('groups')
-    .select('id, name, category, system_name, started_on, blurb, contact_url')
+    .select(
+      'id, name, category, system_name, started_on, blurb, contact_url, discord_webhook_url',
+    )
     .eq('id', id)
     .single()
   if (!group) notFound()
@@ -114,6 +122,53 @@ export default async function GroupPage({
           {sp.error}
         </p>
       ) : null}
+      {sp.message ? (
+        <p
+          aria-live="polite"
+          className="mt-4 border border-[var(--brass)] bg-[rgba(139,105,20,0.06)] px-3 py-2 text-sm text-[var(--brass)]"
+        >
+          {sp.message}
+        </p>
+      ) : null}
+
+      {/* 卓の設定（Discord 連携など。デフォルトは折りたたみ） */}
+      <details className="mt-6 border border-[var(--rule)] bg-[var(--paper)] px-4 py-3 text-sm">
+        <summary className="cursor-pointer font-[family-name:var(--font-mincho)] tracking-[0.15em] text-[var(--ink-2)]">
+          卓 の 設 定
+          {group.discord_webhook_url ? (
+            <span className="ml-3 inline-block border border-[var(--brass)] bg-[rgba(139,105,20,0.08)] px-2 py-0.5 text-[10px] font-medium tracking-normal text-[var(--brass)]">
+              Discord 連携 ON
+            </span>
+          ) : null}
+        </summary>
+        <form
+          action={updateGroupSettings}
+          className="mt-4 flex flex-col gap-3"
+        >
+          <input type="hidden" name="group_id" value={id} />
+          <label className="flex flex-col gap-1 text-xs text-[var(--ink-2)]">
+            <span>
+              <strong className="text-[var(--ink)]">Discord Webhook URL</strong>
+              （任意・卓のサーバに記録を自動投稿）
+            </span>
+            <input
+              name="discord_webhook_url"
+              type="url"
+              defaultValue={group.discord_webhook_url ?? ''}
+              placeholder="https://discord.com/api/webhooks/..."
+              spellCheck={false}
+              autoComplete="off"
+              className="border border-[var(--rule-strong)] bg-[var(--paper)] px-3 py-2 font-mono text-xs text-[var(--ink)] outline-none focus:border-[var(--ink)]"
+            />
+            <span className="text-[10px] text-[var(--ink-3)]">
+              Discord サーバ設定 → 連携サービス → ウェブフック → URL をコピー。空にして保存で連携解除。
+            </span>
+          </label>
+          <button className="self-start border-2 border-[var(--ink)] bg-[var(--paper)] px-4 py-1.5 text-sm font-medium text-[var(--ink)] hover:bg-[var(--paper-2)]">
+            保存
+          </button>
+        </form>
+      </details>
 
       {/* メンバー */}
       <section className="mt-8">

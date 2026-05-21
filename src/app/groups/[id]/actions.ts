@@ -4,6 +4,125 @@ import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { getUserId } from '@/lib/auth'
+import { KIND_LABEL } from '@/lib/genre'
+
+// Discord Webhook URL の最低限の正規化＋検証。
+// Discord 公式パターン：https://discord(app).com/api/webhooks/<id>/<token>
+const DISCORD_WEBHOOK_RE =
+  /^https:\/\/(?:ptb\.|canary\.)?discord(?:app)?\.com\/api\/webhooks\/\d+\/[\w-]+$/
+
+// 卓設定（現状 Discord Webhook URL のみ）の保存。
+export async function updateGroupSettings(formData: FormData) {
+  const uid = await getUserId()
+  if (!uid) redirect('/login')
+
+  const groupId = String(formData.get('group_id') ?? '')
+  const webhookRaw = String(formData.get('discord_webhook_url') ?? '').trim()
+  if (!groupId) redirect('/')
+
+  // 空文字なら null（解除）として保存。値があれば形式チェック。
+  let webhook: string | null = null
+  if (webhookRaw.length > 0) {
+    if (!DISCORD_WEBHOOK_RE.test(webhookRaw)) {
+      redirect(
+        `/groups/${groupId}?error=` +
+          encodeURIComponent(
+            'Discord Webhook URL の形式が正しくありません（https://discord.com/api/webhooks/... 形式）',
+          ),
+      )
+    }
+    webhook = webhookRaw
+  }
+
+  const supabase = await createClient()
+  const { error } = await supabase
+    .from('groups')
+    .update({ discord_webhook_url: webhook })
+    .eq('id', groupId)
+  if (error) {
+    redirect(
+      `/groups/${groupId}?error=` +
+        encodeURIComponent('設定の保存に失敗しました'),
+    )
+  }
+  revalidatePath(`/groups/${groupId}`)
+  redirect(`/groups/${groupId}?message=` + encodeURIComponent('設定を保存しました'))
+}
+
+// セッション記録時に主催の Discord Webhook へ embed を投稿（fire-and-forget）。
+// 失敗は本体に影響させない（記録 DB には既に入っている）。
+async function postSessionToDiscord(params: {
+  webhookUrl: string
+  groupName: string
+  category: string
+  playedOn: string
+  title: string
+  attendeeCount: number
+  note: string | null
+  noteSpoiler: boolean
+  publicUrl: string | null
+}) {
+  const {
+    webhookUrl,
+    groupName,
+    category,
+    playedOn,
+    title,
+    attendeeCount,
+    note,
+    noteSpoiler,
+    publicUrl,
+  } = params
+  const kindLabel = KIND_LABEL[category] ?? category
+  // category 別アクセントカラー（公開カードの種別マークと一致させる）
+  const COLOR: Record<string, number> = {
+    trpg: 0x1e3a5f,
+    mystery: 0x1a1815,
+    werewolf: 0x7a1f1f,
+    boardgame: 0x3d7068,
+    other: 0x5c5247,
+  }
+  const noteText = note
+    ? noteSpoiler
+      ? `||「${note}」||` // Discord のスポイラー記法
+      : `「${note}」`
+    : null
+  const fields: { name: string; value: string; inline?: boolean }[] = [
+    { name: '日付', value: playedOn, inline: true },
+    {
+      name: '出席',
+      value: `${attendeeCount}名`,
+      inline: true,
+    },
+  ]
+  if (noteText) {
+    fields.push({ name: 'ひとこと', value: noteText })
+  }
+  const payload = {
+    username: '卓録',
+    embeds: [
+      {
+        title: `🎲 ${title}`,
+        description: `**${groupName}** ／ ${kindLabel}`,
+        color: COLOR[category] ?? COLOR.other,
+        fields,
+        url: publicUrl ?? undefined,
+        footer: { text: 'takuroku' },
+        timestamp: new Date().toISOString(),
+      },
+    ],
+    allowed_mentions: { parse: [] },
+  }
+  try {
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+  } catch {
+    // 静かに無視
+  }
+}
 
 // メンバー追加（主催が代理で。本人登録は不要）。
 // ペルソナレビュー（はる）の指摘：本人同意のチェックを UI で明示要求する。
@@ -133,6 +252,39 @@ export async function addSession(formData: FormData) {
     group_id: groupId,
     type: 'session_logged',
   })
+
+  // Discord Webhook 投稿（Pro 機能 #1・fire-and-forget で本体は止めない）
+  const { data: groupInfo } = await supabase
+    .from('groups')
+    .select('name, category, discord_webhook_url')
+    .eq('id', groupId)
+    .single()
+  if (groupInfo?.discord_webhook_url) {
+    const { data: activeLink } = await supabase
+      .from('public_links')
+      .select('token')
+      .eq('group_id', groupId)
+      .is('revoked_at', null)
+      .is('suspended_at', null)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+    const siteUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+    const publicUrl = activeLink ? `${siteUrl}/c/${activeLink.token}` : null
+
+    void postSessionToDiscord({
+      webhookUrl: groupInfo.discord_webhook_url,
+      groupName: groupInfo.name,
+      category: groupInfo.category,
+      playedOn,
+      title,
+      attendeeCount: attendeeIds.length,
+      note: note || null,
+      noteSpoiler,
+      publicUrl,
+    })
+  }
 
   revalidatePath(`/groups/${groupId}`)
   redirect(`/groups/${groupId}`)
