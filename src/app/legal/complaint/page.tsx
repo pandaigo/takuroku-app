@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { submitComplaint } from './actions'
 
 export const metadata: Metadata = {
-  title: '通報・異議申立｜卓録',
+  title: '通報・異議申立',
   description:
     '卓録の公開カードや記載内容について、なりすまし・嫌がらせ・プライバシー侵害・名誉毀損・違法等の通報を受け付けます。',
   robots: { index: false, follow: false },

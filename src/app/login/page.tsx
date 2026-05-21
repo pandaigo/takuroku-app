@@ -6,7 +6,8 @@ import { TONE, KIND_LABEL, getCardStats, periodLabel } from '@/lib/genre'
 
 // /login は事実上のLP。検索意図に応えるtitle/descriptionを独自に。
 export const metadata: Metadata = {
-  title: '卓・ボドゲ会の記録を1枚の年鑑カードに｜卓録',
+  // layout の title.template が `%s｜卓録` を付与するので、ここでは「卓録」を含めない
+  title: '卓・ボドゲ会の記録を1枚の年鑑カードに',
   description:
     'TRPG卓・マダミス卓・人狼会・ボドゲ会の「誰と・どれだけ続けたか」を記録し、卓年鑑カードで勧誘・共有。1回数十秒の入力で続けるほど価値が積み上がる、非AIの記録アプリ。',
   openGraph: {

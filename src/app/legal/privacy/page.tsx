@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'プライバシーポリシー｜卓録',
+  title: 'プライバシーポリシー',
   description: '卓録の個人情報の取り扱い',
 }
 

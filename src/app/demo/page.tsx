@@ -10,7 +10,7 @@ import {
 import { CardPresenter } from '@/components/card-presenter'
 
 export const metadata: Metadata = {
-  title: 'デモ｜卓録',
+  title: 'デモ',
   description:
     '卓年鑑カードのデモ（架空の卓・本物のユーザーデータは含みません）',
   robots: { index: false, follow: false },

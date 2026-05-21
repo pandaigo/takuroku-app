@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import { updateComplaintStatus, suspendPublicLink } from './actions'
 
 export const metadata: Metadata = {
-  title: '通報管理｜卓録',
+  title: '通報管理',
   robots: { index: false, follow: false },
 }
 

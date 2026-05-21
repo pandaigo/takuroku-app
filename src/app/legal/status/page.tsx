@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: '稼働状況・障害告知｜卓録',
+  title: '稼働状況・障害告知',
 }
 
 export default function StatusPage() {

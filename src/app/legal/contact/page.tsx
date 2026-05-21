@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: '問い合わせ窓口｜卓録',
+  title: '問い合わせ窓口',
 }
 
 export default function ContactPage() {

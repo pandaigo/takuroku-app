@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: '運営者情報｜卓録',
+  title: '運営者情報',
   description:
     '卓録の運営者・連絡先・サービス内容の表記。',
 }

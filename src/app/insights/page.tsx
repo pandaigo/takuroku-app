@@ -5,7 +5,7 @@ import { requireAuth } from '@/lib/supabase/require-auth'
 import { TONE } from '@/lib/genre'
 
 export const metadata: Metadata = {
-  title: '分析｜卓録',
+  title: '分析',
   description: 'すべての卓を横断した同卓者・シナリオの集計',
   robots: { index: false, follow: false },
 }
